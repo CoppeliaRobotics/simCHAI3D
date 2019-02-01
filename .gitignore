@@ -5,3 +5,9 @@ libv_repExtCHAI3D.1.0.0.dylib
 libv_repExtCHAI3D.1.0.dylib
 libv_repExtCHAI3D.1.dylib
 libv_repExtCHAI3D.dylib
+debug/
+release/
+*.user
+ui_*.h
+Makefile.Debug
+Makefile.Release
