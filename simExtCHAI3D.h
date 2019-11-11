@@ -44,39 +44,39 @@
 
 
 //---------------------------------------------------------------------------
-#ifndef CVREPH
-#define CVREPH
+#ifndef CSIMCHAI3DH
+#define CSIMCHAI3DH
 //---------------------------------------------------------------------------
 
 //===========================================================================
 /*!
-    \file v_repExtCHAI3D.h
+    \file simExtCHAI3D.h
 
     \brief
-    <b> V-REP Module </b> \n
+    <b> CoppeliaSim Module </b> \n
     Main Header File.
 */
 //===========================================================================
 
 //---------------------------------------------------------------------------
-/*!  \defgroup V-REP CHAI3D plugin for V-REP
-//   \brief Shared library for use by V-REP (from <a href="http://www.coppeliarobotics.com" target="_blank">Coppelia Robotics</a>).
+/*!  \defgroup CoppeliaSim CHAI3D plugin for CoppeliaSim
+//   \brief Shared library for use by CoppeliaSim (from <a href="http://www.coppeliarobotics.com" target="_blank">Coppelia Robotics</a>).
 //
 //  Please refer to the \ref index "introduction" for more information on
-//  how to use the CHAI3D plugin for V-REP.
+//  how to use the CHAI3D plugin for CoppeliaSim.
 */
 //---------------------------------------------------------------------------
 
 #ifdef _WIN32
-    #define VREP_DLLEXPORT extern "C" __declspec(dllexport)
+    #define SIM_DLLEXPORT extern "C" __declspec(dllexport)
 #endif
 #if defined (__linux) || defined (__APPLE__)
-    #define VREP_DLLEXPORT extern "C"
+    #define SIM_DLLEXPORT extern "C"
 #endif
 
-VREP_DLLEXPORT unsigned char v_repStart   (void* reservedPointer, int reservedInt);
-VREP_DLLEXPORT void          v_repEnd     ();
-VREP_DLLEXPORT void*         v_repMessage (int message, int* auxiliaryData, void* customData, int* replyData);
+SIM_DLLEXPORT unsigned char simStart   (void* reservedPointer, int reservedInt);
+SIM_DLLEXPORT void          simEnd     ();
+SIM_DLLEXPORT void*         simMessage (int message, int* auxiliaryData, void* customData, int* replyData);
 
 //---------------------------------------------------------------------------
 #endif

@@ -1,7 +1,7 @@
 QT -= core
 QT -= gui
 
-TARGET = v_repExtCHAI3D
+TARGET = simExtCHAI3D
 TEMPLATE = lib
 
 DEFINES -= UNICODE
@@ -34,11 +34,11 @@ INCLUDEPATH += "../include"
 }
 
 win32 {
-    DEFINES += WIN_VREP
+    DEFINES += WIN_SIM
 }
 
 macx {
-    DEFINES += MAC_VREP
+    DEFINES += MAC_SIM
     DEFINES += MACOSX # for CHAI3D
     INCLUDEPATH += "../../../chai3d-3.2.0/src"
     INCLUDEPATH += "/usr/local/include/eigen3"
@@ -47,7 +47,7 @@ macx {
 }
 
 unix:!macx {
-    DEFINES += LIN_VREP
+    DEFINES += LIN_SIM
 }
 
 unix:!symbian {
@@ -60,14 +60,14 @@ unix:!symbian {
 }
 
 HEADERS += \
-    v_repExtCHAI3D.h \
+    simExtCHAI3D.h \
     ../include/scriptFunctionData.h \
     ../include/scriptFunctionDataItem.h \
-    ../include/v_repLib.h
+    ../include/simLib.h
 
 SOURCES += \
-    v_repExtCHAI3D.cpp \
+    simExtCHAI3D.cpp \
     ../common/scriptFunctionData.cpp \
     ../common/scriptFunctionDataItem.cpp \
-    ../common/v_repLib.cpp
+    ../common/simLib.cpp
 

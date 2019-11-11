@@ -1,10 +1,10 @@
 .qmake.stash
 Makefile
 *.o
-libv_repExtCHAI3D.1.0.0.dylib
-libv_repExtCHAI3D.1.0.dylib
-libv_repExtCHAI3D.1.dylib
-libv_repExtCHAI3D.dylib
+libsimExtCHAI3D.1.0.0.dylib
+libsimExtCHAI3D.1.0.dylib
+libsimExtCHAI3D.1.dylib
+libsimExtCHAI3D.dylib
 debug/
 release/
 *.user

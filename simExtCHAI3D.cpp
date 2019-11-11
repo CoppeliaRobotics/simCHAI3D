@@ -47,9 +47,9 @@
 #include <iostream>
 using namespace std;
 
-#include "v_repExtCHAI3D.h"
+#include "simExtCHAI3D.h"
 #include "scriptFunctionData.h"
-#include "v_repLib.h"
+#include "simLib.h"
 
 #include "chai3d.h"
 using namespace chai3d;
@@ -67,7 +67,7 @@ using namespace chai3d;
 
 
 
-/** \addtogroup V-REP
+/** \addtogroup CoppeliaSim
  *  @{
  */
 
@@ -1017,7 +1017,7 @@ void hapticReset ()
 
 
 
-LIBRARY vrepLib; // the V-REP library that we will dynamically load and bind
+LIBRARY simLib; // the CoppeliaSim library that we will dynamically load and bind
 
 #define CONCAT(x,y,z)     x y z
 #define strConCat(x,y,z)	CONCAT(x,y,z)
@@ -1706,9 +1706,9 @@ void LUA_READ_BUTTONS_CALLBACK(SScriptCallBack* p)
 
 
 
-///  \brief V-REP shared library initialization.
+///  \brief CoppeliaSim shared library initialization.
 
-VREP_DLLEXPORT unsigned char v_repStart(void* reservedPointer,int reservedInt)
+SIM_DLLEXPORT unsigned char simStart(void* reservedPointer,int reservedInt)
 {
   // setup plumbing
   HapticThread   = new cThread;
@@ -1728,34 +1728,34 @@ VREP_DLLEXPORT unsigned char v_repStart(void* reservedPointer,int reservedInt)
   std::string currentDirAndPath(curDirAndFile);
   std::string temp(currentDirAndPath);
 #ifdef _WIN32
-  temp+="\\v_rep.dll";
+  temp+="\\coppeliaSim.dll";
 #elif defined (__linux)
-  temp+="/libv_rep.so";
+  temp+="/libcoppeliaSim.so";
 #elif defined (__APPLE__)
-  temp+="/libv_rep.dylib";
+  temp+="/libcoppeliaSim.dylib";
 #endif
-  vrepLib=loadVrepLibrary(temp.c_str());
-  if (vrepLib==NULL)
+  simLib=loadSimLibrary(temp.c_str());
+  if (simLib==NULL)
   {
-    std::cout << "Error, could not find or correctly load the V-REP library. Cannot start 'CHAI3D' plugin.\n";
+    std::cout << "Error, could not find or correctly load the CoppeliaSim library. Cannot start 'CHAI3D' plugin.\n";
     return(0);
   }
-  if (getVrepProcAddresses(vrepLib)==0)
+  if (getSimProcAddresses(simLib)==0)
   {
-    std::cout << "Error, could not find all required functions in the V-REP library. Cannot start 'CHAI3D' plugin.\n";
-    unloadVrepLibrary(vrepLib);
+    std::cout << "Error, could not find all required functions in the CoppeliaSim library. Cannot start 'CHAI3D' plugin.\n";
+    unloadSimLibrary(simLib);
     return(0);
   }
 
-  // Check the V-REP version:
-  int vrepVer,vrepRev;
-  simGetIntegerParameter(sim_intparam_program_version,&vrepVer);
-  simGetIntegerParameter(sim_intparam_program_revision,&vrepRev);
-  if ((vrepVer<30400) || ((vrepVer == 30400) && (vrepRev<9)))
+  // Check the CoppeliaSim version:
+  int simVer,simRev;
+  simGetIntegerParameter(sim_intparam_program_version,&simVer);
+  simGetIntegerParameter(sim_intparam_program_revision,&simRev);
+  if ((simVer<30400) || ((simVer == 30400) && (simRev<9)))
   {
-    std::cout << "Sorry, your V-REP copy is somewhat old, V-REP 3.4.0 rev9 or higher is required. Cannot start 'CHAI3D' plugin.\n";
-    unloadVrepLibrary(vrepLib);
-    return(0); // Means error, V-REP will unload this plugin
+    std::cout << "Sorry, your CoppeliaSim copy is somewhat old, CoppeliaSim 3.4.0 rev9 or higher is required. Cannot start 'CHAI3D' plugin.\n";
+    unloadSimLibrary(simLib);
+    return(0); // Means error, CoppeliaSim will unload this plugin
   }
 
   // register LUA commands
@@ -1806,21 +1806,21 @@ VREP_DLLEXPORT unsigned char v_repStart(void* reservedPointer,int reservedInt)
 
 
 
-///  \brief V-REP shared library disconnect.
+///  \brief CoppeliaSim shared library disconnect.
 
-VREP_DLLEXPORT void v_repEnd()
+SIM_DLLEXPORT void simEnd()
 {
   // stop haptic thread and cleanup
   hapticReset();
 
-  unloadVrepLibrary(vrepLib);
+  unloadSimLibrary(simLib);
 }
 
 
 
-///  \brief V-REP shared library message processing callback.
+///  \brief CoppeliaSim shared library message processing callback.
 
-VREP_DLLEXPORT void* v_repMessage(int message,int* auxiliaryData,void* customData,int* replyData)
+SIM_DLLEXPORT void* simMessage(int message,int* auxiliaryData,void* customData,int* replyData)
 {
   int   errorModeSaved;
   void *retVal = NULL;
