@@ -546,7 +546,7 @@ public:
 bool canOutputMsg(int msgType)
 {
     int plugin_verbosity = sim_verbosity_default;
-    simGetModuleInfo("Cam",sim_moduleinfo_verbosity,nullptr,&plugin_verbosity);
+    simGetModuleInfo("CHAI3D",sim_moduleinfo_verbosity,nullptr,&plugin_verbosity);
     return(plugin_verbosity>=msgType);
 }
 
