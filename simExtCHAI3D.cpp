@@ -543,20 +543,6 @@ public:
 
 };
 
-bool canOutputMsg(int msgType)
-{
-    int plugin_verbosity = sim_verbosity_default;
-    simGetModuleInfo("CHAI3D",sim_moduleinfo_verbosity,nullptr,&plugin_verbosity);
-    return(plugin_verbosity>=msgType);
-}
-
-void outputMsg(int msgType,const char* msg)
-{
-    if (canOutputMsg(msgType))
-        printf("%s\n",msg);
-}
-
-
 
 //---------------------------------------------------------------------------
 //
@@ -1750,12 +1736,12 @@ SIM_DLLEXPORT unsigned char simStart(void* reservedPointer,int reservedInt)
   simLib=loadSimLibrary(temp.c_str());
   if (simLib==NULL)
   {
-    outputMsg(sim_verbosity_errors,"simExtCHAI3D: error: could not find or correctly load the CoppeliaSim library. Cannot start 'CHAI3D' plugin.");
+    simAddLog("CHAI3D",sim_verbosity_errors,"could not find or correctly load the CoppeliaSim library. Cannot start the plugin.");
     return(0);
   }
   if (getSimProcAddresses(simLib)==0)
   {
-    outputMsg(sim_verbosity_errors,"simExtCHAI3D: error: could not find all required functions in the CoppeliaSim library. Cannot start 'CHAI3D' plugin.");
+    simAddLog("CHAI3D",sim_verbosity_errors,"could not find all required functions in the CoppeliaSim library. Cannot start the plugin.");
     unloadSimLibrary(simLib);
     return(0);
   }
