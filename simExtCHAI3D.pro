@@ -7,6 +7,7 @@ TEMPLATE = lib
 DEFINES -= UNICODE
 DEFINES += QT_COMPIL
 CONFIG += shared
+
 INCLUDEPATH += "../include"
 
 *-msvc* {
@@ -35,6 +36,17 @@ INCLUDEPATH += "../include"
 
 win32 {
     DEFINES += WIN_SIM
+    DEFINES += M_PI 3.14159265358979323846
+    INCLUDEPATH += "e:/chai3d-3.2.0/external/Eigen"
+    INCLUDEPATH += "e:/chai3d-3.2.0/external/glew/include"
+    INCLUDEPATH += "e:/chai3d-3.2.0/src"
+    LIBS += "e:/chai3d-3.2.0/lib/Release/x64/chai3d.lib"
+    LIBS += opengl32.lib
+    LIBS += glu32.lib
+    LIBS += User32.lib
+    LIBS += Winmm.lib
+    LIBS += Ole32.lib
+    LIBS += Shell32.lib
 }
 
 macx {
