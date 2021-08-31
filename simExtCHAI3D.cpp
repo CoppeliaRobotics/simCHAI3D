@@ -1747,8 +1747,6 @@ SIM_DLLEXPORT unsigned char simStart(void* reservedPointer,int reservedInt)
   }
 
   // register LUA commands
-
-  simRegisterScriptVariable("simCHAI3D","require('simExtCHAI3D')",0);
   
   simRegisterScriptCallbackFunction(strConCat(LUA_START_COMMAND,"@","CHAI3D"),strConCat("number result=",LUA_START_COMMAND,"(number deviceIndex,number toolRadius,number workspaceRadius)"),LUA_START_CALLBACK);
   simRegisterScriptCallbackFunction(strConCat(LUA_RESET_COMMAND,"@","CHAI3D"),strConCat("",LUA_RESET_COMMAND,"()"),LUA_RESET_CALLBACK);
