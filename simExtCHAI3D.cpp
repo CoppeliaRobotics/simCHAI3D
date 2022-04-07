@@ -1748,18 +1748,18 @@ SIM_DLLEXPORT unsigned char simStart(void* reservedPointer,int reservedInt)
 
   // register LUA commands
   
-  simRegisterScriptCallbackFunction(strConCat(LUA_START_COMMAND,"@","CHAI3D"),strConCat("number result=",LUA_START_COMMAND,"(number deviceIndex,number toolRadius,number workspaceRadius)"),LUA_START_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_START_COMMAND,"@","CHAI3D"),strConCat("int result=",LUA_START_COMMAND,"(int deviceIndex,float toolRadius,float workspaceRadius)"),LUA_START_CALLBACK);
   simRegisterScriptCallbackFunction(strConCat(LUA_RESET_COMMAND,"@","CHAI3D"),strConCat("",LUA_RESET_COMMAND,"()"),LUA_RESET_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_SHAPE_COMMAND,"@","CHAI3D"),strConCat("number objectID=",LUA_ADD_SHAPE_COMMAND,"(table vertices,table indices,table_3 position,table_3 orientation,number stiffnessFactor)"),LUA_ADD_SHAPE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_POINT_COMMAND,"@","CHAI3D"),strConCat("number objectID=",LUA_ADD_CONSTRAINT_POINT_COMMAND,"(number deviceIndex,table_3 position,number Kp,number Kv,number Fmax)"),LUA_ADD_CONSTRAINT_POINT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_SEGMENT_COMMAND,"@","CHAI3D"),strConCat("number objectID=",LUA_ADD_CONSTRAINT_SEGMENT_COMMAND,"(number deviceIndex,table_3 point,table_3 segment,number Kp,number Kv,number Fmax)"),LUA_ADD_CONSTRAINT_SEGMENT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_PLANE_COMMAND,"@","CHAI3D"),strConCat("number objectID=",LUA_ADD_CONSTRAINT_PLANE_COMMAND,"(number deviceIndex,table_3 position,table_3 normal,number Kp,number Kv,number Fmax)"),LUA_ADD_CONSTRAINT_PLANE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_SHAPE_COMMAND,"@","CHAI3D"),strConCat("",LUA_UPDATE_SHAPE_COMMAND,"(number objectID,table_3 position,table_3 orientation,number stiffnessFactor)"),LUA_UPDATE_SHAPE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_CONSTRAINT_COMMAND,"@","CHAI3D"),strConCat("",LUA_UPDATE_CONSTRAINT_COMMAND,"(number objectID,table_3 positionA,table_3 positionB,number Kp,number Kv,number Fmax)"),LUA_UPDATE_CONSTRAINT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_REMOVE_OBJECT_COMMAND,"@","CHAI3D"),strConCat("",LUA_REMOVE_OBJECT_COMMAND,"(number objectID)"),LUA_REMOVE_OBJECT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_POSITION_COMMAND,"@","CHAI3D"),strConCat("table_3 position=",LUA_READ_POSITION_COMMAND,"(number deviceIndex)"),LUA_READ_POSITION_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_FORCE_COMMAND,"@","CHAI3D"),strConCat("table_3 force=",LUA_READ_FORCE_COMMAND,"(number deviceIndex)"),LUA_READ_FORCE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_BUTTONS_COMMAND,"@","CHAI3D"),strConCat("number buttons=",LUA_READ_BUTTONS_COMMAND,"(number deviceIndex)"),LUA_READ_BUTTONS_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_SHAPE_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_SHAPE_COMMAND,"(float[] vertices,int[] indices,float[3] position,float[3] orientation,float stiffnessFactor)"),LUA_ADD_SHAPE_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_POINT_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_CONSTRAINT_POINT_COMMAND,"(int deviceIndex,float[3] position,float Kp,float Kv,float Fmax)"),LUA_ADD_CONSTRAINT_POINT_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_SEGMENT_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_CONSTRAINT_SEGMENT_COMMAND,"(int deviceIndex,float[3] point,float[3] segment,float Kp,float Kv,float Fmax)"),LUA_ADD_CONSTRAINT_SEGMENT_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_PLANE_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_CONSTRAINT_PLANE_COMMAND,"(int deviceIndex,float[3] position,float[3] normal,float Kp,float Kv,float Fmax)"),LUA_ADD_CONSTRAINT_PLANE_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_SHAPE_COMMAND,"@","CHAI3D"),strConCat("",LUA_UPDATE_SHAPE_COMMAND,"(int objectID,float[3] position,float[3] orientation,float stiffnessFactor)"),LUA_UPDATE_SHAPE_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_CONSTRAINT_COMMAND,"@","CHAI3D"),strConCat("",LUA_UPDATE_CONSTRAINT_COMMAND,"(int objectID,float[3] positionA,float[3] positionB,float Kp,float Kv,float Fmax)"),LUA_UPDATE_CONSTRAINT_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_REMOVE_OBJECT_COMMAND,"@","CHAI3D"),strConCat("",LUA_REMOVE_OBJECT_COMMAND,"(int objectID)"),LUA_REMOVE_OBJECT_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_READ_POSITION_COMMAND,"@","CHAI3D"),strConCat("float[3] position=",LUA_READ_POSITION_COMMAND,"(int deviceIndex)"),LUA_READ_POSITION_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_READ_FORCE_COMMAND,"@","CHAI3D"),strConCat("float[3] force=",LUA_READ_FORCE_COMMAND,"(int deviceIndex)"),LUA_READ_FORCE_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_READ_BUTTONS_COMMAND,"@","CHAI3D"),strConCat("int buttons=",LUA_READ_BUTTONS_COMMAND,"(int deviceIndex)"),LUA_READ_BUTTONS_CALLBACK);
 
   // Following for backward compatibility:
   simRegisterScriptVariable(LUA_START_COMMANDOLD,LUA_START_COMMAND,-1);
