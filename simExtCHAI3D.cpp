@@ -1606,6 +1606,66 @@ void LUA_READ_POSITION_CALLBACK(SScriptCallBack* p)
 
 
 
+// definitions for LUA_READ_MATRIX_COMMAND
+#define LUA_READ_MATRIX_COMMAND "simCHAI3D.readMatrix"
+const int inArgs_READ_MATRIX[] = {
+    1,
+    sim_script_arg_int32, 0
+};
+
+///  \brief Retrieve the current matrix of a haptic device (identified by its \c deviceIndex) in the \ref scene "scene".
+///
+///  \param p   SScriptCallBack I/O buffer.
+///
+///  The corresponding LUA function is:
+///  \code
+///    table_3 simExtCHAI3D_readMatrix(number deviceIndex)
+///  \endcode
+///
+///  \return
+///  An array containing 12 values: Xx, Yx, Zx, X, Xy, Yy, Zy, Y, Xz, Yz, Zz, Z
+
+void LUA_READ_MATRIX_CALLBACK(SScriptCallBack* p)
+{
+  std::vector<float> retM(12, 0.0f);
+
+  // validate argument count and types
+  CScriptFunctionData data;
+  if (data.readDataFromStack(p->stackID, inArgs_READ_MATRIX, inArgs_READ_MATRIX[0], LUA_READ_MATRIX_COMMAND))
+  {
+    vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
+
+    int deviceIndex = inData->at(0).int32Data[0];
+
+    if (Cursors.find(deviceIndex) != Cursors.end())
+    {
+        cVector3d pos = Cursors[deviceIndex]->Tool->getDeviceGlobalPos();
+        cMatrix3d rotm = Cursors[deviceIndex]->Tool->getDeviceGlobalRot();
+        retM[0] = (float)rotm.getCol0().x();
+        retM[4] = (float)rotm.getCol0().y();
+        retM[8] = (float)rotm.getCol0().z();
+        retM[1] = (float)rotm.getCol1().x();
+        retM[5] = (float)rotm.getCol1().y();
+        retM[9] = (float)rotm.getCol1().z();
+        retM[2] = (float)rotm.getCol2().x();
+        retM[6] = (float)rotm.getCol2().y();
+        retM[10] = (float)rotm.getCol2().z();
+        retM[3] = (float)pos.x();
+        retM[7] = (float)pos.y();
+        retM[11] = (float)pos.z();
+    }
+  }
+
+  // populate reply
+  if (retM.size() >= 12)
+  {
+    data.pushOutData(CScriptFunctionDataItem(retM));
+  }
+  data.writeDataToStack(p->stackID);
+}
+
+
+
 // definitions for LUA_READ_FORCE_COMMAND
 #define LUA_READ_FORCE_COMMANDOLD "simExtCHAI3D_readForce"
 #define LUA_READ_FORCE_COMMAND "simCHAI3D.readForce"
@@ -1758,6 +1818,7 @@ SIM_DLLEXPORT unsigned char simStart(void* reservedPointer,int reservedInt)
   simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_CONSTRAINT_COMMAND,"@","CHAI3D"),strConCat("",LUA_UPDATE_CONSTRAINT_COMMAND,"(int objectID,float[3] positionA,float[3] positionB,float Kp,float Kv,float Fmax)"),LUA_UPDATE_CONSTRAINT_CALLBACK);
   simRegisterScriptCallbackFunction(strConCat(LUA_REMOVE_OBJECT_COMMAND,"@","CHAI3D"),strConCat("",LUA_REMOVE_OBJECT_COMMAND,"(int objectID)"),LUA_REMOVE_OBJECT_CALLBACK);
   simRegisterScriptCallbackFunction(strConCat(LUA_READ_POSITION_COMMAND,"@","CHAI3D"),strConCat("float[3] position=",LUA_READ_POSITION_COMMAND,"(int deviceIndex)"),LUA_READ_POSITION_CALLBACK);
+  simRegisterScriptCallbackFunction(strConCat(LUA_READ_MATRIX_COMMAND,"@","CHAI3D"),strConCat("float[12] matrix=",LUA_READ_MATRIX_COMMAND,"(int deviceIndex)"),LUA_READ_MATRIX_CALLBACK);
   simRegisterScriptCallbackFunction(strConCat(LUA_READ_FORCE_COMMAND,"@","CHAI3D"),strConCat("float[3] force=",LUA_READ_FORCE_COMMAND,"(int deviceIndex)"),LUA_READ_FORCE_CALLBACK);
   simRegisterScriptCallbackFunction(strConCat(LUA_READ_BUTTONS_COMMAND,"@","CHAI3D"),strConCat("int buttons=",LUA_READ_BUTTONS_COMMAND,"(int deviceIndex)"),LUA_READ_BUTTONS_CALLBACK);
 
