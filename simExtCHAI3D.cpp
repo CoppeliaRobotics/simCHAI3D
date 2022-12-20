@@ -1872,10 +1872,6 @@ SIM_DLLEXPORT void* simMessage(int message,int* auxiliaryData,void* customData,i
   int   errorModeSaved;
   void *retVal = NULL;
 
-  simGetIntegerParameter(sim_intparam_error_report_mode, &errorModeSaved);
-  simSetIntegerParameter(sim_intparam_error_report_mode, sim_api_errormessage_ignore);
-  simSetIntegerParameter(sim_intparam_error_report_mode, errorModeSaved);
-
   return retVal;
 }
 
