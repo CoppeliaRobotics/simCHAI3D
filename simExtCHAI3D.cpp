@@ -48,8 +48,8 @@
 using namespace std;
 
 #include "simExtCHAI3D.h"
-#include <scriptFunctionData.h>
-#include <simLib.h>
+#include <simLib/scriptFunctionData.h>
+#include <simLib/simLib.h>
 
 #include "chai3d.h"
 using namespace chai3d;
