@@ -1,7 +1,7 @@
 QT -= core
 QT -= gui
 
-TARGET = simExtCHAI3D
+TARGET = simCHAI3D
 TEMPLATE = lib
 
 DEFINES -= UNICODE
@@ -73,13 +73,13 @@ unix:!symbian {
 }
 
 HEADERS += \
-    simExtCHAI3D.h \
+    simCHAI3D.h \
     ../include/simLib/scriptFunctionData.h \
     ../include/simLib/scriptFunctionDataItem.h \
     ../include/simLib/simLib.h
 
 SOURCES += \
-    simExtCHAI3D.cpp \
+    simCHAI3D.cpp \
     ../include/simLib/scriptFunctionData.cpp \
     ../include/simLib/scriptFunctionDataItem.cpp \
     ../include/simLib/simLib.cpp

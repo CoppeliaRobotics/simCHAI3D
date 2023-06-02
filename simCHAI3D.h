@@ -44,8 +44,7 @@
 
 
 //---------------------------------------------------------------------------
-#ifndef CSIMCHAI3DH
-#define CSIMCHAI3DH
+#pragma once
 //---------------------------------------------------------------------------
 
 //===========================================================================
@@ -69,10 +68,7 @@
 
 #include <simLib/simExp.h>
 
-SIM_DLLEXPORT unsigned char simStart   (void* reservedPointer, int reservedInt);
-SIM_DLLEXPORT void          simEnd     ();
-SIM_DLLEXPORT void*         simMessage (int message, int* auxiliaryData, void* customData, int* replyData);
+SIM_DLLEXPORT int simInit (const char* pluginName);
+SIM_DLLEXPORT void simCleanup();
+SIM_DLLEXPORT void simMsg(int message,int* auxData,void* pointerData);
 
-//---------------------------------------------------------------------------
-#endif
-//---------------------------------------------------------------------------

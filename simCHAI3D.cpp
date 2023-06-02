@@ -47,7 +47,7 @@
 #include <iostream>
 using namespace std;
 
-#include "simExtCHAI3D.h"
+#include "simCHAI3D.h"
 #include <simLib/scriptFunctionData.h>
 #include <simLib/simLib.h>
 
@@ -63,7 +63,7 @@ using namespace chai3d;
 #include <unistd.h>
 #endif
 
-#define PLUGIN_VERSION 1
+#define PLUGIN_VERSION 2
 
 
 
@@ -1018,14 +1018,8 @@ void hapticReset ()
 
 LIBRARY simLib; // the CoppeliaSim library that we will dynamically load and bind
 
-#define CONCAT(x,y,z)     x y z
-#define strConCat(x,y,z)	CONCAT(x,y,z)
-
-
 
 // definitions for LUA_START_COMMAND
-#define LUA_START_COMMANDOLD "simExtCHAI3D_start"
-#define LUA_START_COMMAND "simCHAI3D.start"
 const int inArgs_START[] = {
     3,
     sim_script_arg_int32,   0,
@@ -1055,7 +1049,7 @@ void LUA_START_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_START, inArgs_START[0], LUA_START_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_START, inArgs_START[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
     int   deviceIndex     = inData->at(0).int32Data[0];
@@ -1063,7 +1057,7 @@ void LUA_START_CALLBACK(SScriptCallBack* p)
     float workspaceRadius = inData->at(2).floatData[0];
 
     if (hapticConnect(deviceIndex, toolRadius, workspaceRadius)) commandResult = 1;
-    else simSetLastError(LUA_START_COMMAND, "Initialization failed.");
+    else simSetLastError(nullptr, "Initialization failed.");
   }
 
   // populate reply
@@ -1074,8 +1068,6 @@ void LUA_START_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_RESET_COMMAND
-#define LUA_RESET_COMMANDOLD "simExtCHAI3D_reset"
-#define LUA_RESET_COMMAND "simCHAI3D.reset"
 const int inArgs_RESET[] = {
     0
 };
@@ -1096,7 +1088,7 @@ void LUA_RESET_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_RESET, inArgs_RESET[0], LUA_RESET_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_RESET, inArgs_RESET[0], nullptr))
   {
     hapticReset();
   }
@@ -1108,8 +1100,6 @@ void LUA_RESET_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_ADD_SHAPE_COMMAND
-#define LUA_ADD_SHAPE_COMMANDOLD "simExtCHAI3D_addShape"
-#define LUA_ADD_SHAPE_COMMAND "simCHAI3D.addShape"
 const int inArgs_ADD_SHAPE[] = {
     5,
     sim_script_arg_float|sim_script_arg_table, 9,
@@ -1138,7 +1128,7 @@ void LUA_ADD_SHAPE_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_ADD_SHAPE, inArgs_ADD_SHAPE[0], LUA_ADD_SHAPE_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_ADD_SHAPE, inArgs_ADD_SHAPE[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1172,8 +1162,6 @@ void LUA_ADD_SHAPE_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_ADD_CONSTRAINT_POINT_COMMAND
-#define LUA_ADD_CONSTRAINT_POINT_COMMANDOLD "simExtCHAI3D_addConstraintPoint"
-#define LUA_ADD_CONSTRAINT_POINT_COMMAND "simCHAI3D.addConstraintPoint"
 const int inArgs_ADD_CONSTRAINT_POINT[] = {
     5,
     sim_script_arg_int32,                     0,
@@ -1202,7 +1190,7 @@ void LUA_ADD_CONSTRAINT_POINT_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_ADD_CONSTRAINT_POINT, inArgs_ADD_CONSTRAINT_POINT[0], LUA_ADD_CONSTRAINT_POINT_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_ADD_CONSTRAINT_POINT, inArgs_ADD_CONSTRAINT_POINT[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1241,8 +1229,6 @@ void LUA_ADD_CONSTRAINT_POINT_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_ADD_CONSTRAINT_SEGMENT_COMMAND
-#define LUA_ADD_CONSTRAINT_SEGMENT_COMMANDOLD "simExtCHAI3D_addConstraintSegment"
-#define LUA_ADD_CONSTRAINT_SEGMENT_COMMAND "simCHAI3D.addConstraintSegment"
 const int inArgs_ADD_CONSTRAINT_SEGMENT[] = {
     6,
     sim_script_arg_int32,                     0,
@@ -1272,7 +1258,7 @@ void LUA_ADD_CONSTRAINT_SEGMENT_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_ADD_CONSTRAINT_SEGMENT, inArgs_ADD_CONSTRAINT_SEGMENT[0], LUA_ADD_CONSTRAINT_SEGMENT_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_ADD_CONSTRAINT_SEGMENT, inArgs_ADD_CONSTRAINT_SEGMENT[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1311,8 +1297,6 @@ void LUA_ADD_CONSTRAINT_SEGMENT_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_ADD_CONSTRAINT_PLANE_COMMAND
-#define LUA_ADD_CONSTRAINT_PLANE_COMMANDOLD "simExtCHAI3D_addConstraintPlane"
-#define LUA_ADD_CONSTRAINT_PLANE_COMMAND "simCHAI3D.addConstraintPlane"
 const int inArgs_ADD_CONSTRAINT_PLANE[] = {
     6,
     sim_script_arg_int32,                     0,
@@ -1342,7 +1326,7 @@ void LUA_ADD_CONSTRAINT_PLANE_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_ADD_CONSTRAINT_PLANE, inArgs_ADD_CONSTRAINT_PLANE[0], LUA_ADD_CONSTRAINT_PLANE_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_ADD_CONSTRAINT_PLANE, inArgs_ADD_CONSTRAINT_PLANE[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1381,8 +1365,6 @@ void LUA_ADD_CONSTRAINT_PLANE_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_UPDATE_SHAPE_COMMAND
-#define LUA_UPDATE_SHAPE_COMMANDOLD "simExtCHAI3D_updateShape"
-#define LUA_UPDATE_SHAPE_COMMAND "simCHAI3D.updateShape"
 const int inArgs_UPDATE_SHAPE[] = {
     4,
     sim_script_arg_int32,                     0,
@@ -1408,7 +1390,7 @@ void LUA_UPDATE_SHAPE_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_UPDATE_SHAPE, inArgs_UPDATE_SHAPE[0], LUA_UPDATE_SHAPE_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_UPDATE_SHAPE, inArgs_UPDATE_SHAPE[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1432,7 +1414,7 @@ void LUA_UPDATE_SHAPE_CALLBACK(SScriptCallBack* p)
 
     if (!updateShape(objectID, pos, rot, stiffnessFactor))
     {
-      simSetLastError(LUA_UPDATE_SHAPE_COMMAND, "Invalid shape ID.");
+      simSetLastError(nullptr, "Invalid shape ID.");
     }
   }
 
@@ -1443,8 +1425,6 @@ void LUA_UPDATE_SHAPE_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_UPDATE_CONSTRAINT_COMMAND
-#define LUA_UPDATE_CONSTRAINT_COMMANDOLD "simExtCHAI3D_updateConstraint"
-#define LUA_UPDATE_CONSTRAINT_COMMAND "simCHAI3D.updateConstraint"
 const int inArgs_UPDATE_CONSTRAINT[] = {
     6,
     sim_script_arg_int32,                     0,
@@ -1472,7 +1452,7 @@ void LUA_UPDATE_CONSTRAINT_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_UPDATE_CONSTRAINT, inArgs_UPDATE_CONSTRAINT[0], LUA_UPDATE_CONSTRAINT_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_UPDATE_CONSTRAINT, inArgs_UPDATE_CONSTRAINT[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1502,7 +1482,7 @@ void LUA_UPDATE_CONSTRAINT_CALLBACK(SScriptCallBack* p)
 
     if (!updateConstraint(objectID, pos, dir, Kp, Kv, Fmax))
     {
-      simSetLastError(LUA_UPDATE_CONSTRAINT_COMMAND, "Invalid shape ID.");
+      simSetLastError(nullptr, "Invalid shape ID.");
     }
   }
 
@@ -1513,8 +1493,6 @@ void LUA_UPDATE_CONSTRAINT_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_REMOVE_OBJECT_COMMAND
-#define LUA_REMOVE_OBJECT_COMMANDOLD "simExtCHAI3D_removeObject"
-#define LUA_REMOVE_OBJECT_COMMAND "simCHAI3D.removeObject"
 const int inArgs_REMOVE_OBJECT[] = {
     1,
     sim_script_arg_int32, 0
@@ -1537,7 +1515,7 @@ void LUA_REMOVE_OBJECT_CALLBACK(SScriptCallBack* p)
   CScriptFunctionData data;
 
   // validate argument count and types
-  if (data.readDataFromStack(p->stackID, inArgs_REMOVE_OBJECT, inArgs_REMOVE_OBJECT[0], LUA_REMOVE_OBJECT_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_REMOVE_OBJECT, inArgs_REMOVE_OBJECT[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1545,7 +1523,7 @@ void LUA_REMOVE_OBJECT_CALLBACK(SScriptCallBack* p)
 
     if (!removeObject(objectID))
     {
-      simSetLastError(LUA_REMOVE_OBJECT_COMMAND, "Invalid shape ID.");
+      simSetLastError(nullptr, "Invalid shape ID.");
     }
   }
 
@@ -1556,8 +1534,6 @@ void LUA_REMOVE_OBJECT_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_READ_POSITION_COMMAND
-#define LUA_READ_POSITION_COMMANDOLD "simExtCHAI3D_readPosition"
-#define LUA_READ_POSITION_COMMAND "simCHAI3D.readPosition"
 const int inArgs_READ_POSITION[] = {
     1,
     sim_script_arg_int32, 0
@@ -1581,7 +1557,7 @@ void LUA_READ_POSITION_CALLBACK(SScriptCallBack* p)
 
   // validate argument count and types
   CScriptFunctionData data;
-  if (data.readDataFromStack(p->stackID, inArgs_READ_POSITION, inArgs_READ_POSITION[0], LUA_READ_POSITION_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_READ_POSITION, inArgs_READ_POSITION[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1607,7 +1583,6 @@ void LUA_READ_POSITION_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_READ_MATRIX_COMMAND
-#define LUA_READ_MATRIX_COMMAND "simCHAI3D.readMatrix"
 const int inArgs_READ_MATRIX[] = {
     1,
     sim_script_arg_int32, 0
@@ -1631,7 +1606,7 @@ void LUA_READ_MATRIX_CALLBACK(SScriptCallBack* p)
 
   // validate argument count and types
   CScriptFunctionData data;
-  if (data.readDataFromStack(p->stackID, inArgs_READ_MATRIX, inArgs_READ_MATRIX[0], LUA_READ_MATRIX_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_READ_MATRIX, inArgs_READ_MATRIX[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1667,8 +1642,6 @@ void LUA_READ_MATRIX_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_READ_FORCE_COMMAND
-#define LUA_READ_FORCE_COMMANDOLD "simExtCHAI3D_readForce"
-#define LUA_READ_FORCE_COMMAND "simCHAI3D.readForce"
 const int inArgs_READ_FORCE[] = {
     1,
     sim_script_arg_int32, 0
@@ -1692,7 +1665,7 @@ void LUA_READ_FORCE_CALLBACK(SScriptCallBack* p)
 
   // validate argument count and types
   CScriptFunctionData data;
-  if (data.readDataFromStack(p->stackID, inArgs_READ_FORCE, inArgs_READ_FORCE[0], LUA_READ_FORCE_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_READ_FORCE, inArgs_READ_FORCE[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1718,8 +1691,6 @@ void LUA_READ_FORCE_CALLBACK(SScriptCallBack* p)
 
 
 // definitions for LUA_READ_BUTTONS_COMMAND
-#define LUA_READ_BUTTONS_COMMANDOLD "simExtCHAI3D_readButtons"
-#define LUA_READ_BUTTONS_COMMAND "simCHAI3D.readButtons"
 const int inArgs_READ_BUTTONS[] = {
     1,
     sim_script_arg_int32, 0
@@ -1746,7 +1717,7 @@ void LUA_READ_BUTTONS_CALLBACK(SScriptCallBack* p)
 
   // validate argument count and types
   CScriptFunctionData data;
-  if (data.readDataFromStack(p->stackID, inArgs_READ_BUTTONS, inArgs_READ_BUTTONS[0], LUA_READ_BUTTONS_COMMAND))
+  if (data.readDataFromStack(p->stackID, inArgs_READ_BUTTONS, inArgs_READ_BUTTONS[0], nullptr))
   {
     vector<CScriptFunctionDataItem>* inData = data.getInDataPtr();
 
@@ -1767,7 +1738,7 @@ void LUA_READ_BUTTONS_CALLBACK(SScriptCallBack* p)
 
 ///  \brief CoppeliaSim shared library initialization.
 
-SIM_DLLEXPORT unsigned char simStart(void* reservedPointer,int reservedInt)
+SIM_DLLEXPORT int simInit(const char* pluginName)
 {
   // setup plumbing
   HapticThread   = new cThread;
@@ -1796,66 +1767,38 @@ SIM_DLLEXPORT unsigned char simStart(void* reservedPointer,int reservedInt)
   simLib=loadSimLibrary(temp.c_str());
   if (simLib==NULL)
   {
-    printf("simExtCHAI3D: error: could not find or correctly load the CoppeliaSim library. Cannot start the plugin.\n"); // cannot use simAddLog here.
+    simAddLog(pluginName,sim_verbosity_errors,"could not find or correctly load the CoppeliaSim library. Cannot start the plugin.");
     return(0);
   }
   if (getSimProcAddresses(simLib)==0)
   {
-    printf("simExtCHAI3D: error: could not find all required functions in the CoppeliaSim library. Cannot start the plugin.\n"); // cannot use simAddLog here.
+    simAddLog(pluginName,sim_verbosity_errors,"could not find all required functions in the CoppeliaSim library. Cannot start the plugin.");
     unloadSimLibrary(simLib);
     return(0);
   }
 
   // register LUA commands
-  
-  simRegisterScriptCallbackFunction(strConCat(LUA_START_COMMAND,"@","CHAI3D"),strConCat("int result=",LUA_START_COMMAND,"(int deviceIndex,float toolRadius,float workspaceRadius)"),LUA_START_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_RESET_COMMAND,"@","CHAI3D"),strConCat("",LUA_RESET_COMMAND,"()"),LUA_RESET_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_SHAPE_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_SHAPE_COMMAND,"(float[] vertices,int[] indices,float[3] position,float[3] orientation,float stiffnessFactor)"),LUA_ADD_SHAPE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_POINT_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_CONSTRAINT_POINT_COMMAND,"(int deviceIndex,float[3] position,float Kp,float Kv,float Fmax)"),LUA_ADD_CONSTRAINT_POINT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_SEGMENT_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_CONSTRAINT_SEGMENT_COMMAND,"(int deviceIndex,float[3] point,float[3] segment,float Kp,float Kv,float Fmax)"),LUA_ADD_CONSTRAINT_SEGMENT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_PLANE_COMMAND,"@","CHAI3D"),strConCat("int objectID=",LUA_ADD_CONSTRAINT_PLANE_COMMAND,"(int deviceIndex,float[3] position,float[3] normal,float Kp,float Kv,float Fmax)"),LUA_ADD_CONSTRAINT_PLANE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_SHAPE_COMMAND,"@","CHAI3D"),strConCat("",LUA_UPDATE_SHAPE_COMMAND,"(int objectID,float[3] position,float[3] orientation,float stiffnessFactor)"),LUA_UPDATE_SHAPE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_CONSTRAINT_COMMAND,"@","CHAI3D"),strConCat("",LUA_UPDATE_CONSTRAINT_COMMAND,"(int objectID,float[3] positionA,float[3] positionB,float Kp,float Kv,float Fmax)"),LUA_UPDATE_CONSTRAINT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_REMOVE_OBJECT_COMMAND,"@","CHAI3D"),strConCat("",LUA_REMOVE_OBJECT_COMMAND,"(int objectID)"),LUA_REMOVE_OBJECT_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_POSITION_COMMAND,"@","CHAI3D"),strConCat("float[3] position=",LUA_READ_POSITION_COMMAND,"(int deviceIndex)"),LUA_READ_POSITION_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_MATRIX_COMMAND,"@","CHAI3D"),strConCat("float[12] matrix=",LUA_READ_MATRIX_COMMAND,"(int deviceIndex)"),LUA_READ_MATRIX_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_FORCE_COMMAND,"@","CHAI3D"),strConCat("float[3] force=",LUA_READ_FORCE_COMMAND,"(int deviceIndex)"),LUA_READ_FORCE_CALLBACK);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_BUTTONS_COMMAND,"@","CHAI3D"),strConCat("int buttons=",LUA_READ_BUTTONS_COMMAND,"(int deviceIndex)"),LUA_READ_BUTTONS_CALLBACK);
-
-  // Following for backward compatibility:
-  simRegisterScriptVariable(LUA_START_COMMANDOLD,LUA_START_COMMAND,-1);
-  simRegisterScriptVariable(LUA_RESET_COMMANDOLD,LUA_RESET_COMMAND,-1);
-  simRegisterScriptVariable(LUA_ADD_SHAPE_COMMANDOLD,LUA_ADD_SHAPE_COMMAND,-1);
-  simRegisterScriptVariable(LUA_ADD_CONSTRAINT_POINT_COMMANDOLD,LUA_ADD_CONSTRAINT_POINT_COMMAND,-1);
-  simRegisterScriptVariable(LUA_ADD_CONSTRAINT_SEGMENT_COMMANDOLD,LUA_ADD_CONSTRAINT_SEGMENT_COMMAND,-1);
-  simRegisterScriptVariable(LUA_ADD_CONSTRAINT_PLANE_COMMANDOLD,LUA_ADD_CONSTRAINT_PLANE_COMMAND,-1);
-  simRegisterScriptVariable(LUA_UPDATE_SHAPE_COMMANDOLD,LUA_UPDATE_SHAPE_COMMAND,-1);
-  simRegisterScriptVariable(LUA_UPDATE_CONSTRAINT_COMMANDOLD,LUA_UPDATE_CONSTRAINT_COMMAND,-1);
-  simRegisterScriptVariable(LUA_REMOVE_OBJECT_COMMANDOLD,LUA_REMOVE_OBJECT_COMMAND,-1);
-  simRegisterScriptVariable(LUA_READ_POSITION_COMMANDOLD,LUA_READ_POSITION_COMMAND,-1);
-  simRegisterScriptVariable(LUA_READ_FORCE_COMMANDOLD,LUA_READ_FORCE_COMMAND,-1);
-  simRegisterScriptVariable(LUA_READ_BUTTONS_COMMANDOLD,LUA_READ_BUTTONS_COMMAND,-1);
-  simRegisterScriptCallbackFunction(strConCat(LUA_START_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_START_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_RESET_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_RESET_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_SHAPE_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_ADD_SHAPE_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_POINT_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_ADD_CONSTRAINT_POINT_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_SEGMENT_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_ADD_CONSTRAINT_SEGMENT_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_ADD_CONSTRAINT_PLANE_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_ADD_CONSTRAINT_PLANE_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_SHAPE_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_UPDATE_SHAPE_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_UPDATE_CONSTRAINT_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_UPDATE_CONSTRAINT_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_REMOVE_OBJECT_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_REMOVE_OBJECT_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_POSITION_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_READ_POSITION_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_FORCE_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_READ_FORCE_COMMAND," notation instead"),0);
-  simRegisterScriptCallbackFunction(strConCat(LUA_READ_BUTTONS_COMMANDOLD,"@","CHAI3D"),strConCat("Please use the ",LUA_READ_BUTTONS_COMMAND," notation instead"),0);
+  simRegisterScriptCallbackFunction("start",nullptr,LUA_START_CALLBACK);
+  simRegisterScriptCallbackFunction("reset",nullptr,LUA_RESET_CALLBACK);
+  simRegisterScriptCallbackFunction("addShape",nullptr,LUA_ADD_SHAPE_CALLBACK);
+  simRegisterScriptCallbackFunction("addConstraintPoint",nullptr,LUA_ADD_CONSTRAINT_POINT_CALLBACK);
+  simRegisterScriptCallbackFunction("addConstraintSegment",nullptr,LUA_ADD_CONSTRAINT_SEGMENT_CALLBACK);
+  simRegisterScriptCallbackFunction("addConstraintPlane",nullptr,LUA_ADD_CONSTRAINT_PLANE_CALLBACK);
+  simRegisterScriptCallbackFunction("updateShape",nullptr,LUA_UPDATE_SHAPE_CALLBACK);
+  simRegisterScriptCallbackFunction("updateConstraint",nullptr,LUA_UPDATE_CONSTRAINT_CALLBACK);
+  simRegisterScriptCallbackFunction("removeObject",nullptr,LUA_REMOVE_OBJECT_CALLBACK);
+  simRegisterScriptCallbackFunction("readPosition",nullptr,LUA_READ_POSITION_CALLBACK);
+  simRegisterScriptCallbackFunction("readMatrix",nullptr,LUA_READ_MATRIX_CALLBACK);
+  simRegisterScriptCallbackFunction("readForce",nullptr,LUA_READ_FORCE_CALLBACK);
+  simRegisterScriptCallbackFunction("readButtons",nullptr,LUA_READ_BUTTONS_CALLBACK);
 
   return PLUGIN_VERSION;
 }
 
 
-
 ///  \brief CoppeliaSim shared library disconnect.
 
-SIM_DLLEXPORT void simEnd()
+SIM_DLLEXPORT void simCleanup()
 {
   // stop haptic thread and cleanup
   hapticReset();
@@ -1867,14 +1810,8 @@ SIM_DLLEXPORT void simEnd()
 
 ///  \brief CoppeliaSim shared library message processing callback.
 
-SIM_DLLEXPORT void* simMessage(int message,int* auxiliaryData,void* customData,int* replyData)
+SIM_DLLEXPORT void simMsg(int message,int* auxData,void* pointerData)
 {
-  int   errorModeSaved;
-  void *retVal = NULL;
-
-  return retVal;
 }
-
-
 
 /** @}*/
