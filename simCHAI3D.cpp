@@ -54,15 +54,6 @@ using namespace std;
 #include "chai3d.h"
 using namespace chai3d;
 
-#ifdef _WIN32
-#include <shlwapi.h>
-#pragma comment(lib, "Shlwapi.lib")
-#endif
-
-#ifdef __APPLE__
-#include <unistd.h>
-#endif
-
 #define PLUGIN_VERSION 2
 
 
@@ -1738,7 +1729,7 @@ void LUA_READ_BUTTONS_CALLBACK(SScriptCallBack* p)
 
 ///  \brief CoppeliaSim shared library initialization.
 
-SIM_DLLEXPORT int simInit(const char* pluginName)
+SIM_DLLEXPORT int simInit(SSimInit* info)
 {
   // setup plumbing
   HapticThread   = new cThread;
@@ -1748,31 +1739,15 @@ SIM_DLLEXPORT int simInit(const char* pluginName)
   DeviceHandler  = new cHapticDeviceHandler;
   World          = new cWorld;
 
-  char curDirAndFile[1024];
-#ifdef _WIN32
-  GetModuleFileName(NULL,curDirAndFile,1023);
-  PathRemoveFileSpec(curDirAndFile);
-#elif defined (__linux) || defined (__APPLE__)
-  if (getcwd(curDirAndFile, sizeof(curDirAndFile)) == NULL) strcpy(curDirAndFile, "");
-#endif
-  std::string currentDirAndPath(curDirAndFile);
-  std::string temp(currentDirAndPath);
-#ifdef _WIN32
-  temp+="\\coppeliaSim.dll";
-#elif defined (__linux)
-  temp+="/libcoppeliaSim.so";
-#elif defined (__APPLE__)
-  temp+="/libcoppeliaSim.dylib";
-#endif
-  simLib=loadSimLibrary(temp.c_str());
+  simLib=loadSimLibrary(info->coppeliaSimLibPath);
   if (simLib==NULL)
   {
-    simAddLog(pluginName,sim_verbosity_errors,"could not find or correctly load the CoppeliaSim library. Cannot start the plugin.");
+    simAddLog(info->pluginName,sim_verbosity_errors,"could not find or correctly load the CoppeliaSim library. Cannot start the plugin.");
     return(0);
   }
   if (getSimProcAddresses(simLib)==0)
   {
-    simAddLog(pluginName,sim_verbosity_errors,"could not find all required functions in the CoppeliaSim library. Cannot start the plugin.");
+    simAddLog(info->pluginName,sim_verbosity_errors,"could not find all required functions in the CoppeliaSim library. Cannot start the plugin.");
     unloadSimLibrary(simLib);
     return(0);
   }
@@ -1810,7 +1785,7 @@ SIM_DLLEXPORT void simCleanup()
 
 ///  \brief CoppeliaSim shared library message processing callback.
 
-SIM_DLLEXPORT void simMsg(int message,int* auxData,void* pointerData)
+SIM_DLLEXPORT void simMsg(SSimMsg*)
 {
 }
 
