@@ -73,13 +73,13 @@ unix:!symbian {
 }
 
 HEADERS += \
-    simCHAI3D.h \
+    sourceCode/simCHAI3D.h \
     ../include/simLib/scriptFunctionData.h \
     ../include/simLib/scriptFunctionDataItem.h \
     ../include/simLib/simLib.h
 
 SOURCES += \
-    simCHAI3D.cpp \
+    sourceCode/simCHAI3D.cpp \
     ../include/simLib/scriptFunctionData.cpp \
     ../include/simLib/scriptFunctionDataItem.cpp \
     ../include/simLib/simLib.cpp
